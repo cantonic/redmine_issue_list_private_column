@@ -3,10 +3,15 @@ module RedminePrivateColumn
     module QueriesHelperPatch
       
       def column_content_with_is_private(column, issue)
-				if column.value(issue) == true
-					value = image_tag('true.png')
+				value = column.value(issue)
+				if column.name == :is_private
+					if issue.is_private?
+						value = image_tag('true.png')
+					else
+						value = image_tag('false.png')
+					end
 				else
-					value = image_tag('false.png')
+					column_content_without_is_private(column, issue)
 				end
       end
 
